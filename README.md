@@ -1,1 +1,1 @@
-# hacktoberfest-finder
+# Hacktoberfest Issue Finder
