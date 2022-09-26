@@ -4,7 +4,8 @@ export default class Document extends NextDocument {
   render() {
     return (
       <Html lang='en'>
-        <Head />
+        <Head>
+        </Head>
         <body>
           <Main />
           <NextScript />

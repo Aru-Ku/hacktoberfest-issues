@@ -5,11 +5,14 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      poppins: ['Poppins', 'sans-serif']
+      Inter: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif',
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji']
     },
     extend: {
 
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 }
