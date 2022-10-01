@@ -10,8 +10,8 @@ export const TimeStamp = (props: {
   const { time, format = "" } = props;
 
   return (
-    <span className='italic text-gray-600'>
+    <time className='text-gray-600' dateTime={time}>
       {dayjs(time).fromNow()}
-    </span>
+    </time>
   )
 }

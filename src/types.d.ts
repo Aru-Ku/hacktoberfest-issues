@@ -30,7 +30,9 @@ interface Repository {
   name: string;
   url: string;
   description: string;
-  languages: Node<Language>
+  languages: Node<Language>;
+  isInOrganization: boolean;
+  owner: Author
 }
 
 export const SORT = ["comments", "reactions", "reactions-+1", "reactions--1", "reactions-smile", "reactions-thinking_face", "reactions-heart", "reactions-tada", "interactions", "created", "updated"] as const;

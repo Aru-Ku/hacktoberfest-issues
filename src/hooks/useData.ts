@@ -64,6 +64,10 @@ export const useData = (options: IOptions, nextPageCursor?: string) => {
               name,
               url,
               description: descriptionHTML,
+              isInOrganization,
+              owner{
+                url, avatarUrl, login
+              },
               languages(first:10){
                 nodes{
                   name, color, id
