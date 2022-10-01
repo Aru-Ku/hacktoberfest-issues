@@ -1,7 +1,7 @@
 import { Issue } from "../../types"
 import Image from 'next/image'
 import { TimeStamp } from "./_timestamp";
-import { Label, Labels } from "./_label";
+import { Labels } from "./_label";
 import { RenderMarkdown } from "./_markdown";
 
 interface ICardProps {

@@ -68,3 +68,13 @@ export type HactoberfestIssuesQueryResponse = {
     nodes: Issue[]
   }
 }
+
+export interface IContributor {
+  id: number;
+  login: string;
+  node_id: string;
+  avatar_url: string;
+  html_url: string;
+  type: string;
+  [key: string]: string | number;
+}

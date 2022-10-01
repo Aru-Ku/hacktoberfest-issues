@@ -1,6 +1,6 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, GetStaticProps, NextPage } from 'next';
 import { useCallback, useEffect } from 'react';
-import type { IOptions } from '../types';
+import type { IContributor, IOptions } from '../types';
 
 import { useState } from 'react';
 import { useData } from '../hooks/useData';
@@ -8,6 +8,7 @@ import { Card } from '../components/Card/Card';
 import { CardGrid } from '../components/Card/CardGrid';
 import { Header } from '../components/Header/Header';
 import { FilterForm } from '../components/Forms/FilterForm';
+import { Contributors, IContributorsProps } from '../components/Contributors/Contributors';
 
 const INITIAL_DATA_OPTIONS: IOptions = {
   isIssueOpen: true,
@@ -17,7 +18,11 @@ const INITIAL_DATA_OPTIONS: IOptions = {
   per_page: 20,
 }
 
-const Home: NextPage = () => {
+
+
+const Home: NextPage<{} & IContributorsProps> = (props) => {
+  const { contributors } = props;
+
   const [options, setOptions] = useState(INITIAL_DATA_OPTIONS)
   const { issueList, pageInfo, error, isLoading, languages } = useData({ ...options });
 
@@ -45,6 +50,7 @@ const Home: NextPage = () => {
         <div className='sticky top-0'>
           <Header />
           <FilterForm languages={languages} />
+          <Contributors contributors={contributors} />
         </div>
       </aside>
       <section>
@@ -57,6 +63,16 @@ const Home: NextPage = () => {
       </section>
     </main>
   )
+}
+
+const CONTRIBUTORS_URL = 'https://api.github.com/repos/Aru-Ku/hacktoberfest-issues/contributors';
+export const getStaticProps: GetStaticProps = async (_context) => {
+  const contributors = await fetch(CONTRIBUTORS_URL).then(r => r.json())
+  return {
+    props: {
+      contributors
+    },
+  }
 }
 
 export default Home
