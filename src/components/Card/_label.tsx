@@ -41,7 +41,7 @@ export function Labels(props: {
   const remainingCount = list.length - labels.length;
 
   return (
-    <div>
+    <div className='flex items-center flex-wrap space-x-2'>
       {labels.map(label => <Label key={label[id]} {...label} />)}
       {remainingCount > 0 && <Label {...{
         color: `+${remainingCount}`,
@@ -81,7 +81,7 @@ export const Label = (props: {
         color: textColor,
         borderColor: borderColor
       }}
-      className="leading-none m-1 py-1 px-2 rounded-full border">
+      className="leading-none  py-1 px-2 rounded-full border">
       {props.name}
     </span>
   )
