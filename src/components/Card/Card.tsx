@@ -12,7 +12,7 @@ export const Card = (props: ICardProps) => {
   const { data } = props;
 
   return (
-    <div className="issue-card snap-start bg-white rounded-b border border-gray-400 hover:border-blue-600 hover:outline-8 hover:drop-shadow-lg outline-blue-600 drop-shadow-md p-2 flex flex-col">
+    <div className="dark:bg-gray-800 dark:text-gray-100 issue-card snap-start bg-white rounded-b border border-gray-400 hover:border-blue-600 hover:outline-8 hover:drop-shadow-lg outline-blue-600 drop-shadow-md p-2 flex flex-col">
       <div className="issue-title text-lg  ">
         <a href={data.url} className="font-semibold focus:outline-none focus:ring-1 focus:ring-blue-600 hover:text-blue-600 hover:underline" target="_blank noopener noreferrer">
           {data.title}

@@ -4,7 +4,7 @@ import ThemeSwitcher from "./ThemeSwitcher";
 
 export const Header = () => {
   return (
-    <div className="sticky top-0 bg-white z-50 py-2">
+    <div className="sticky top-0 bg-white z-50 py-2 dark:bg-gray-800 dark:text-gray-100">
       <div className="container mx-auto flex flex-col items-center md:flex-row justify-center md:justify-between">
         <h1 className="text-xl md:text-2xl py-2 text-center antialiased font-bold">
           Hacktoberfest Issues

@@ -6,7 +6,6 @@ export default function useThemeSwitcher() {
 
   useEffect(() => {
     const darkMode = JSON.parse(Cookies.get("darkMode") ?? "false");
-
     if (darkMode) {
       document.documentElement.classList.add("dark");
       setDarkMode(true);
@@ -20,11 +19,12 @@ export default function useThemeSwitcher() {
     if (darkMode) {
       document.documentElement.classList.remove("dark");
       setDarkMode(false);
+      Cookies.set("darkMode", JSON.stringify(false));
     } else {
       document.documentElement.classList.add("dark");
       setDarkMode(true);
+      Cookies.set("darkMode", JSON.stringify(true));
     }
-    Cookies.set("darkMode", JSON.stringify(darkMode));
   }
   return {
     darkMode,
