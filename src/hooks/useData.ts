@@ -106,7 +106,7 @@ export const useData = (options: IOptions, nextPageCursor?: string) => {
 
   return {
     isLoading: isLoading.current,
-    languages: languages.current,
+    languages: Array.from(languages.current),
     issueList: issueList,
     issueCount: data?.search.issueCount || 0,
     pageInfo: pageInfo.current,
