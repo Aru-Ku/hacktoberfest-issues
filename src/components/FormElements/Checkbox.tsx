@@ -1,26 +1,27 @@
 export interface ICheckboxProps {
   label: string;
-  htmlFor?: string;
-  id?: string;
+
   inputClasses?: string;
   labelClasses?: string
 }
 
 const CHECKBOX_INPUT_DEFAULT_CLASSES =
-  `form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white 
-checked:bg-blue-600 checked:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 
-transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer `
+  `rounded border-grey-300 shadow-sm text-gray-700 focus:border-blue-600
+focus:border-transparent focus:ring-1 focus:ring-offset-2 focus:border-blue-600 `
 
 export const Checkbox = (props: ICheckboxProps) => {
   const {
-    label, htmlFor, id, inputClasses = "", labelClasses = ""
+    label, inputClasses = "", labelClasses = ""
   } = props;
 
   return (
-    <div className="form-check">
-      <input className={CHECKBOX_INPUT_DEFAULT_CLASSES + inputClasses} type="checkbox" id={id || htmlFor} />
-      <label className={"form-check-label inline-block text-gray-800 " + labelClasses} htmlFor={id || htmlFor}>
-        {label}
+    <div className="block mt-2 w-full">
+      <label className={"inline-flex items-center" + labelClasses}>
+        <input
+          type="checkbox"
+          className={CHECKBOX_INPUT_DEFAULT_CLASSES + inputClasses}
+        />
+        <span className="ml-2">{label}</span>
       </label>
     </div>
   )
