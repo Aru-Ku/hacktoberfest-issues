@@ -16,9 +16,15 @@ export const CardGrid = (props: ICardGrid) => {
     return <Loader />;
   }
 
+  if (!isLoading && dataLength === 0) {
+    return <p>No issues found</p>;
+  }
+
   return (
     <InfiniteScroll loader={<Loader />} hasMore next={loadMore} dataLength={dataLength}>
-      <div className="container mx-auto grid grid-cols-1 gap-4 p-4 snap-both snap-proximity">{children}</div>
+      <div className="container mx-auto grid grid-cols-1 gap-4 p-4 snap-both snap-proximity overflow-x-hidden">
+        {children}
+      </div>
     </InfiniteScroll>
   );
 };

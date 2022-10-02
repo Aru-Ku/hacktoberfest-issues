@@ -7,19 +7,35 @@ export interface ISelectProps {
   labelClasses?: string;
   selectClasses?: string;
   optionClasses?: string;
+  value: string | undefined;
+  setValue: (value: string) => void;
 }
 
 const SELECT_DEFAULT_CLASSES = `block w-full mt-1 rounded-md border-gray-300 shadow-sm
   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 `;
 
 export const Select = (props: ISelectProps) => {
-  const { label, labelClasses = '', selectClasses = '', optionClasses = '', options, placeholder = '' } = props;
+  const {
+    label,
+    labelClasses = '',
+    selectClasses = '',
+    optionClasses = '',
+    options,
+    placeholder = '',
+    value,
+    setValue,
+  } = props;
 
   return (
     <div className="my-2 w-full">
       <label className={'block' + labelClasses}>
         <span className="text-gray-700">{label}</span>
-        <select className={SELECT_DEFAULT_CLASSES + selectClasses} placeholder={placeholder}>
+        <select
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className={SELECT_DEFAULT_CLASSES + selectClasses}
+          placeholder={placeholder}
+        >
           <option value={undefined} className="text-grey-400">
             Filter by Language
           </option>

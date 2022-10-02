@@ -1,18 +1,17 @@
-import useSWR from 'swr';
+import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
 import type { HactoberfestIssuesQueryResponse, IOptions, Issue, PageInfo } from '../types';
 
-import { request } from 'graphql-request';
-import { useEffect, useRef, useState } from 'react';
+const axiosInstance = axios.create({
+  baseURL: 'https://api.github.com',
+  headers: {
+    Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_AUTH_PAT_TOKEN}`
+  }
+})
 
-const fetcher = (query: string) =>
-  request(
-    'https://api.github.com/graphql',
-    query,
-    {},
-    {
-      authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_AUTH_PAT_TOKEN}`,
-    }
-  );
+type Response = {
+  data: HactoberfestIssuesQueryResponse
+}
 
 const filter_issues = (issue: Issue) => {
   if (!issue) return false;
@@ -31,96 +30,66 @@ const gather_languages = (langs: string[], issue: Issue) => {
 
 const initialIssues: Issue[] = [];
 
-export const useData = (options: IOptions, nextPageCursor?: string) => {
+export const useData = (options: IOptions) => {
   const [issueList, setIssueList] = useState(initialIssues);
   const pageInfo = useRef<PageInfo>({});
-  const languages = useRef(new Set<string>());
-  const [query, setQuery] = useState('');
+  const languages = useRef<string[]>([]);
   const isLoading = useRef(true);
+  const issueCount = useRef(0);
 
-  const { data, error } = useSWR<HactoberfestIssuesQueryResponse>(
-    query &&
-      `query {
-    search(${query}) {
-      issueCount,
-      pageInfo{
-        hasNextPage,
-        hasPreviousPage,
-        startCursor,
-        endCursor
-      },
-        nodes {
-          __typename
-          ... on Issue {
-            url,
-            title,
-            body,
-            state,
-            createdAt,
-            number,
-            updatedAt,
-            author{
-              url, avatarUrl, login
-            },
-            labels(first: 10) {
-              nodes{
-                name, color, id
-              }
-            },
-            repository {
-              name,
-              url,
-              description: descriptionHTML,
-              isInOrganization,
-              owner{
-                url, avatarUrl, login
-              },
-              languages(first:10){
-                nodes{
-                  name, color, id
+  useEffect(() => {
+
+    (async () => {
+      const {
+        per_page = 20, nextPageCursor, sort = 'created', order = 'desc'
+      } = options;
+
+      const { data: response }: { data: Response } = await axiosInstance.post('/graphql', {
+        query: `
+          query {
+            rateLimit { limit, cost, remaining, resetAt }
+            search(
+              first: ${per_page} type: ISSUE ${nextPageCursor ? `after: "${nextPageCursor}"` : ''}
+              query: "hacktoberfest state:open is:issue sort:${sort}-${order}") {
+                issueCount,
+                pageInfo { hasNextPage, hasPreviousPage, startCursor, endCursor },
+                nodes {
+                  __typename
+                  ... on Issue {
+                    url, title, body, state, createdAt, number, updatedAt,
+                    author { url, avatarUrl, login },
+                    labels(first: 10) { nodes { name, color, id } },
+                    repository {
+                      name, url, isInOrganization,
+                      description: descriptionHTML,
+                      owner { url, avatarUrl, login },
+                      languages(first:10) { nodes { name, color, id } }
+                    }
+                  }
                 }
               }
-            }
-          }
-      }
-    }
-  }`,
-    fetcher
-  );
+            }`
+      });
 
-  // Construct search query
-  useEffect(() => {
-    const { isIssueOpen, goodFirstIssue, sort, order, per_page, language, nextPageCursor } = options;
-
-    const initial_query = `first: ${per_page}, type: ISSUE, ${nextPageCursor ? `after: "${nextPageCursor}", ` : ''}`;
-    const search_query =
-      ` hacktoberfest ` +
-      `${goodFirstIssue ? 'label:good first issue ' : ''}` +
-      `${language ? `language:${language} ` : ''}` +
-      `${isIssueOpen ? 'state:open' : 'state:closed'} ` +
-      `sort:${sort}-${order}`;
-
-    setQuery(() => `${initial_query}, query:"${search_query}"`);
-  }, [options]);
-
-  useEffect(() => {
-    if (data) {
-      const filteredIssues = data.search.nodes.filter(filter_issues);
+      const filteredIssues = response.data.search.nodes.filter(filter_issues);
       const languagesFromRepository = filteredIssues.reduce(gather_languages, []);
 
-      setIssueList((prev) => [...prev, ...filteredIssues]);
-      pageInfo.current = { ...data.search.pageInfo };
+      setIssueList((prev) => ([...prev, ...filteredIssues]));
+      pageInfo.current = { ...response.data.search.pageInfo };
       isLoading.current = false;
-      languages.current = new Set([...Array.from(languages.current), ...languagesFromRepository]);
-    }
-  }, [data]);
+      issueCount.current = response.data.search.issueCount;
+      languages.current = Array.from(new Set([...languages.current, ...languagesFromRepository]))
+
+    })();
+
+  }, [options])
 
   return {
     isLoading: isLoading.current,
-    languages: Array.from(languages.current),
+    languages: languages.current,
     issueList: issueList,
-    issueCount: data?.search.issueCount || 0,
+    issueCoung: issueCount.current,
     pageInfo: pageInfo.current,
-    error,
-  };
-};
+  }
+
+}
