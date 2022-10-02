@@ -55,10 +55,8 @@ export interface IOptions {
   sort?: SortValues;
   order?: 'desc' | 'asc';
   per_page?: number;
-  goodFirstIssue?: boolean;
   pageInfo?: PageInfo;
   nextPageCursor?: string;
-  language?: string;
 }
 
 export interface Issue {
