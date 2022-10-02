@@ -1,5 +1,5 @@
-import { ElementType, ReactNode } from "react"
-import { ILinkProps, Link } from "./Link"
+import { ElementType, ReactNode } from 'react';
+import { ILinkProps, Link } from './Link';
 
 export interface IconLinkProps extends ILinkProps {
   Icon: ElementType;
@@ -17,5 +17,5 @@ export const IconLink = (props: IconLinkProps) => {
       <span className="pr-2">{text || children}</span>
       <Icon />
     </Link>
-  )
-}
+  );
+};

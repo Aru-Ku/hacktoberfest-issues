@@ -1,5 +1,5 @@
-import { ElementType, ReactNode } from "react"
-import { Button } from "./Button"
+import { ElementType, ReactNode } from 'react';
+import { Button } from './Button';
 
 export interface IIconsButonProps {
   Icon: ElementType;
@@ -9,12 +9,12 @@ export interface IIconsButonProps {
 }
 
 export const IconButton = (props: IIconsButonProps) => {
-  const { Icon, children, text, className = "" } = props;
+  const { Icon, children, text, className = '' } = props;
 
   return (
     <Button className={className}>
       <span className="pr-2">{text || children}</span>
       <Icon />
     </Button>
-  )
-}
+  );
+};

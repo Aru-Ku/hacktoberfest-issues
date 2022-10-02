@@ -16,14 +16,12 @@ const INITIAL_DATA_OPTIONS: IOptions = {
   sort: 'created',
   order: 'desc',
   per_page: 20,
-}
-
-
+};
 
 const Home: NextPage<{} & IContributorsProps> = (props) => {
   const { contributors } = props;
 
-  const [options, setOptions] = useState(INITIAL_DATA_OPTIONS)
+  const [options, setOptions] = useState(INITIAL_DATA_OPTIONS);
   const { issueList, pageInfo, error, isLoading, languages } = useData({ ...options });
 
   const loadMore = useCallback(() => {
@@ -32,47 +30,49 @@ const Home: NextPage<{} & IContributorsProps> = (props) => {
     setOptions((prev) => {
       return {
         ...prev,
-        nextPageCursor: pageInfo.endCursor
-      }
-    })
-  }, [pageInfo])
+        nextPageCursor: pageInfo.endCursor,
+      };
+    });
+  }, [pageInfo]);
 
   useEffect(() => {
     // Get next items if there are very few initial issues.
     if (issueList.length <= 10) {
       loadMore();
     }
-  }, [issueList, loadMore])
+  }, [issueList, loadMore]);
 
   return (
     <main className="container mx-auto grid grid-cols-[0.8fr_1.2fr] gap-4">
       <aside>
-        <div className='sticky top-0'>
+        <div className="sticky top-0">
           <Header />
           <FilterForm languages={languages} />
           <Contributors contributors={contributors} />
         </div>
       </aside>
       <section>
-        {<CardGrid loadMore={loadMore} dataLength={issueList.length} isLoading={isLoading}>
-          {issueList.map((issue, index) => {
-            // Temporarily mitigate duplicate issues key error
-            return <Card key={issue.url + index} data={issue} />;
-          })}
-        </CardGrid>}
+        {
+          <CardGrid loadMore={loadMore} dataLength={issueList.length} isLoading={isLoading}>
+            {issueList.map((issue, index) => {
+              // Temporarily mitigate duplicate issues key error
+              return <Card key={issue.url + index} data={issue} />;
+            })}
+          </CardGrid>
+        }
       </section>
     </main>
-  )
-}
+  );
+};
 
 const CONTRIBUTORS_URL = 'https://api.github.com/repos/Aru-Ku/hacktoberfest-issues/contributors';
 export const getStaticProps: GetStaticProps = async (_context) => {
-  const contributors = await fetch(CONTRIBUTORS_URL).then(r => r.json())
+  const contributors = await fetch(CONTRIBUTORS_URL).then((r) => r.json());
   return {
     props: {
-      contributors
+      contributors,
     },
-  }
-}
+  };
+};
 
-export default Home
+export default Home;

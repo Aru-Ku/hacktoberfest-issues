@@ -14,51 +14,49 @@ const getParsedColors = (hex: string) => {
   const lightness_threshold = 0.6;
   const background_alpha = 0.18;
   const border_alpha = 0.3;
-  const perceived_lightness = ((R * 0.2126) + (G * 0.7152) + (B * 0.0722)) / 255;
+  const perceived_lightness = (R * 0.2126 + G * 0.7152 + B * 0.0722) / 255;
 
-  const lightness_switch = Math.max(0, /** Min */ Math.min(((perceived_lightness - lightness_threshold) * -1000), 1))
-  const lighten_by = ((lightness_threshold - perceived_lightness) * 100) * lightness_switch;
+  const lightness_switch = Math.max(0, /** Min */ Math.min((perceived_lightness - lightness_threshold) * -1000, 1));
+  const lighten_by = (lightness_threshold - perceived_lightness) * 100 * lightness_switch;
 
   const textColor = `hsl(${H}deg ${perc(S * 0.01)} ${perc(Math.max((L + lighten_by) * 0.01 - 0.3, 0))})`;
   const backgroundColor = `rgba(${R}, ${G}, ${B}, ${background_alpha})`;
-  const borderColor = `hsl(${H}deg ${perc(S * 0.01)} ${perc((L + lighten_by) * 0.01)} / ${perc(border_alpha)})`
+  const borderColor = `hsl(${H}deg ${perc(S * 0.01)} ${perc((L + lighten_by) * 0.01)} / ${perc(border_alpha)})`;
 
   return {
-    textColor, borderColor, backgroundColor
-  }
-}
+    textColor,
+    borderColor,
+    backgroundColor,
+  };
+};
 
+export function Labels(props: { list: ILabel[] | undefined; id?: keyof ILabel; count?: number }) {
+  const { list, count = 3, id = 'id' } = props;
 
-export function Labels(props: {
-  list: ILabel[] | undefined,
-  id?: keyof ILabel,
-  count?: number
-}) {
-  const { list, count = 3, id = "id" } = props;
-
-  if (!list || list?.length <= 0) return (<></>)
+  if (!list || list?.length <= 0) return <></>;
 
   const labels = list.slice(0, count);
   const remainingCount = list.length - labels.length;
 
   return (
     <div className="flex gap-1 my-1">
-      {labels.map(label => <Label key={label[id]} {...label} />)}
-      {remainingCount > 0 && <Label {...{
-        color: `+${remainingCount}`,
-        id: `+${remainingCount}`,
-        name: `+${remainingCount}`,
-      }} />}
+      {labels.map((label) => (
+        <Label key={label[id]} {...label} />
+      ))}
+      {remainingCount > 0 && (
+        <Label
+          {...{
+            color: `+${remainingCount}`,
+            id: `+${remainingCount}`,
+            name: `+${remainingCount}`,
+          }}
+        />
+      )}
     </div>
-  )
+  );
 }
 
-
-export const Label = (props: {
-  name: string;
-  color: string;
-  id: string;
-}) => {
+export const Label = (props: { name: string; color: string; id: string }) => {
   const colors = props.color ? getParsedColors(props.color) : null;
 
   return (
@@ -68,10 +66,11 @@ export const Label = (props: {
         fontSize: 10,
         backgroundColor: colors?.backgroundColor ?? 'rgb(229 231 235 / var(--tw-bg-opacity))',
         color: colors?.textColor ?? 'black',
-        borderColor: colors?.borderColor ?? 'rgb(209 213 219 / var(--tw-border-opacity))'
+        borderColor: colors?.borderColor ?? 'rgb(209 213 219 / var(--tw-border-opacity))',
       }}
-      className="leading-none py-1 px-2 rounded-full border font-medium">
+      className="leading-none py-1 px-2 rounded-full border font-medium"
+    >
       {props.name}
     </span>
-  )
-}
+  );
+};

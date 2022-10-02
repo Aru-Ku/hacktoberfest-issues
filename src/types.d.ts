@@ -1,7 +1,7 @@
 interface PageInfo {
   hasNextPage?: boolean;
   hasPreviousPage?: boolean;
-  startCursor?: string
+  startCursor?: string;
   endCursor?: string;
 }
 
@@ -24,7 +24,7 @@ interface Language {
 
 type Node<T> = {
   nodes?: T[];
-}
+};
 
 interface Repository {
   name: string;
@@ -32,25 +32,37 @@ interface Repository {
   description: string;
   languages: Node<Language>;
   isInOrganization: boolean;
-  owner: Author
+  owner: Author;
 }
 
-export const SORT = ["comments", "reactions", "reactions-+1", "reactions--1", "reactions-smile", "reactions-thinking_face", "reactions-heart", "reactions-tada", "interactions", "created", "updated"] as const;
+export const SORT = [
+  'comments',
+  'reactions',
+  'reactions-+1',
+  'reactions--1',
+  'reactions-smile',
+  'reactions-thinking_face',
+  'reactions-heart',
+  'reactions-tada',
+  'interactions',
+  'created',
+  'updated',
+] as const;
 export type SortValues = typeof SORT[number];
 
 export interface IOptions {
   isIssueOpen?: boolean;
   sort?: SortValues;
-  order?: "desc" | "asc";
+  order?: 'desc' | 'asc';
   per_page?: number;
   goodFirstIssue?: boolean;
   pageInfo?: PageInfo;
   nextPageCursor?: string;
-  language?: string
+  language?: string;
 }
 
 export interface Issue {
-  __typename: 'Issue' | 'PullRequest'
+  __typename: 'Issue' | 'PullRequest';
   url: string;
   title: string;
   body: string;
@@ -60,16 +72,16 @@ export interface Issue {
   number: number;
   author: Author;
   labels: Node<Label>;
-  repository: Repository
+  repository: Repository;
 }
 
 export type HactoberfestIssuesQueryResponse = {
   search: {
     issueCount: number;
     pageInfo: PageInfo;
-    nodes: Issue[]
-  }
-}
+    nodes: Issue[];
+  };
+};
 
 export interface IContributor {
   id: number;

@@ -1,0 +1,13 @@
+.next
+.github
+.vscode
+.env
+.eslintrc
+.eslintignore
+node_modules
+next-env.d.ts
+.prettierrc
+yarn.lock
+package-lock.json
+public
+tsconfig.json

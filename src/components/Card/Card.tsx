@@ -1,8 +1,8 @@
-import { Issue } from "../../types"
-import Image from 'next/image'
-import { TimeStamp } from "./_timestamp";
-import { Labels } from "./_label";
-import { RenderMarkdown } from "./_markdown";
+import { Issue } from '../../types';
+import Image from 'next/image';
+import { TimeStamp } from './_timestamp';
+import { Labels } from './_label';
+import { RenderMarkdown } from './_markdown';
 
 interface ICardProps {
   data: Issue;
@@ -14,14 +14,30 @@ export const Card = (props: ICardProps) => {
   return (
     <div className="issue-card snap-start bg-white rounded-b border border-gray-400 hover:border-blue-600 hover:outline-8 hover:drop-shadow-lg outline-blue-600 drop-shadow-md p-2 flex flex-col rounded">
       <div className="issue-title text-lg flex items-center">
-        <svg className="mr-2 text-green-600 w-5 h-5" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
+        <svg
+          className="mr-2 text-green-600 w-5 h-5"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="16"
+          height="16"
+          aria-hidden="true"
+        >
           <path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor" />
-          <path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z" fill="currentColor" />
+          <path
+            fill-rule="evenodd"
+            d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"
+            fill="currentColor"
+          />
         </svg>
         <span>
-          <a href={data.url} className="font-semibold focus:outline-none focus:ring-1 focus:ring-blue-600 hover:text-blue-600 hover:underline" target="_blank noopener noreferrer">
+          <a
+            href={data.url}
+            className="font-semibold focus:outline-none focus:ring-1 focus:ring-blue-600 hover:text-blue-600 hover:underline"
+            target="_blank noopener noreferrer"
+          >
             {data.title}
-          </a> #{data.number}
+          </a>{' '}
+          #{data.number}
         </span>
       </div>
       <div className="issue-meta-data flex items-center flex-wrap">
@@ -29,8 +45,19 @@ export const Card = (props: ICardProps) => {
           Opened <TimeStamp time={data.createdAt} /> by&nbsp;
         </div>
         <div className="issue-author flex items-center">
-          <Image className="inline-block rounded-full ring-2 ring-white" height={20} width={20} src={data.author.avatarUrl} alt={data.author.login} />
-          <a className="pl-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 font-semibold text-blue-600 hover:underline" href={data.author.url}>{data.author.login}</a>
+          <Image
+            className="inline-block rounded-full ring-2 ring-white"
+            height={20}
+            width={20}
+            src={data.author.avatarUrl}
+            alt={data.author.login}
+          />
+          <a
+            className="pl-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 font-semibold text-blue-600 hover:underline"
+            href={data.author.url}
+          >
+            {data.author.login}
+          </a>
         </div>
       </div>
       <Labels list={data.labels.nodes} />
@@ -41,21 +68,36 @@ export const Card = (props: ICardProps) => {
       <div className="repository">
         <div className="repository-author flex items-center gap-2">
           <a href={data.repository.owner.url} className="flex">
-            <Image className={`inline-block ring-2 ring-white ${data.repository.isInOrganization ? 'rounded' : 'rounded-full'}`} height={20} width={20} src={data.repository.owner.avatarUrl} alt={data.repository.owner.login} />
+            <Image
+              className={`inline-block ring-2 ring-white ${
+                data.repository.isInOrganization ? 'rounded' : 'rounded-full'
+              }`}
+              height={20}
+              width={20}
+              src={data.repository.owner.avatarUrl}
+              alt={data.repository.owner.login}
+            />
           </a>
-          <a className="focus:outline-none focus:ring-1 focus:ring-blue-600 text-blue-600 hover:underline" href={data.repository.url}>
+          <a
+            className="focus:outline-none focus:ring-1 focus:ring-blue-600 text-blue-600 hover:underline"
+            href={data.repository.url}
+          >
             {data.repository.owner.login}/{data.repository.name}
           </a>
         </div>
-        {data.repository.description && data.repository.description === '<div></div>'
-          ? <div className="description line-clamp-1 text-sm ">No description</div>
-          : <div style={{ minHeight: 20 }} className="description line-clamp-1 text-sm" dangerouslySetInnerHTML={{ __html: data.repository.description }} />
-        }
+        {data.repository.description && data.repository.description === '<div></div>' ? (
+          <div className="description line-clamp-1 text-sm ">No description</div>
+        ) : (
+          <div
+            style={{ minHeight: 20 }}
+            className="description line-clamp-1 text-sm"
+            dangerouslySetInnerHTML={{ __html: data.repository.description }}
+          />
+        )}
         <div className="languages">
           <Labels count={8} list={data.repository.languages.nodes} />
         </div>
       </div>
     </div>
-  )
-
-}
+  );
+};

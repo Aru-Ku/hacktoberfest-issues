@@ -1,14 +1,12 @@
-import { Checkbox } from "../FormElements/Checkbox"
-import { Select } from "../FormElements/Select"
+import { Checkbox } from '../FormElements/Checkbox';
+import { Select } from '../FormElements/Select';
 
 interface IFilterProps {
-  languages: string[]
+  languages: string[];
 }
 
 export const FilterForm = (props: IFilterProps) => {
-  const {
-    languages
-  } = props;
+  const { languages } = props;
   return (
     <div className="p-6 rounded-lg shadow-lg border-2 bg-white">
       <form action="">
@@ -18,6 +16,5 @@ export const FilterForm = (props: IFilterProps) => {
         </div>
       </form>
     </div>
-  )
-
-}
+  );
+};

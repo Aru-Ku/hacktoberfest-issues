@@ -1,17 +1,13 @@
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
 
-export const RenderMarkdown = (props: {
-  markdownText: string
-}) => {
-
-
+export const RenderMarkdown = (props: { markdownText: string }) => {
   return (
     <ReactMarkdown
       components={{
-        img: () => <></> // Do not render images
+        img: () => <></>, // Do not render images
       }}
     >
       {props.markdownText}
     </ReactMarkdown>
-  )
-}
+  );
+};
