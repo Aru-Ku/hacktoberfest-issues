@@ -18,7 +18,7 @@ Find the latest open issues that are tagged for [Hacktoberfest](https://hacktobe
 - Tailwind
 - GitHub Personal Access Token
 - GitHub GraphQL API
-- GraphQL Library
+- Axios Library
 - Vercel for deployment
 
 ## For Development & Contribution to this project.
