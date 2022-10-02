@@ -10,7 +10,6 @@ interface ICardProps {
 
 export const Card = (props: ICardProps) => {
   const { data } = props;
-  console.log(props)
 
   return (
     <div className="issue-card snap-start bg-white rounded-b border border-gray-400 hover:border-blue-600 hover:outline-8 hover:drop-shadow-lg outline-blue-600 drop-shadow-md p-2 flex flex-col rounded">
