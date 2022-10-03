@@ -79,6 +79,7 @@ export const useData = (options: IOptions) => {
       isLoading.current = false;
       issueCount.current = response.data.search.issueCount;
       languages.current = Array.from(new Set([...languages.current, ...languagesFromRepository]))
+        .sort((prev, next) => prev.localeCompare(next));
 
     })();
 
