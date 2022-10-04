@@ -1,5 +1,4 @@
 import { Issue } from '../../types';
-import Image from 'next/image';
 import { TimeStamp } from './_timestamp';
 import { Labels } from './_label';
 import { RenderMarkdown } from './_markdown';
@@ -45,7 +44,7 @@ export const Card = (props: ICardProps) => {
           Opened <TimeStamp time={data.createdAt} /> by&nbsp;
         </div>
         <div className="issue-author flex items-center">
-          <Image
+          <img
             className="inline-block rounded-full ring-2 ring-white"
             height={20}
             width={20}
@@ -68,7 +67,7 @@ export const Card = (props: ICardProps) => {
       <div className="repository">
         <div className="repository-author flex items-center gap-2">
           <a href={data.repository.owner.url} className="flex">
-            <Image
+            <img
               className={`inline-block ring-2 ring-white ${
                 data.repository.isInOrganization ? 'rounded' : 'rounded-full'
               }`}
