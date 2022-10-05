@@ -43,7 +43,7 @@ export const FilterForm = (props: IFilterProps) => {
             setValue={(value) => setValue('goodFirstIssue', value)}
           />
           <Checkbox
-            label="Unassigned Issue"
+            label="Unassigned"
             value={values.unassignedIssue}
             setValue={(value) => setValue('unassignedIssue', value)}
           />
