@@ -16,7 +16,7 @@ export const Header = () => {
         context?.setDarkMode(true);
       }
     }
-  }, []);
+  }, [context]);
 
   return (
     <div className="bg-white dark:bg-gray-900 z-50 py-2">
