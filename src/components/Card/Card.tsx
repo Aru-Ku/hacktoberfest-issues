@@ -11,7 +11,7 @@ export const Card = (props: ICardProps) => {
   const { data } = props;
 
   return (
-    <div className="issue-card snap-start bg-white rounded-b border border-gray-400 hover:border-blue-600 hover:outline-8 hover:drop-shadow-lg outline-blue-600 drop-shadow-md p-2 flex flex-col rounded overflow-x-hidden">
+    <div className="issue-card snap-start bg-white dark:bg-gray-900 rounded-b border border-gray-400 dark:border-gray-50 hover:border-blue-600 dark:hover:border-sky-600 hover:outline-8 hover:drop-shadow-lg outline-blue-600 dark:outline-sky-600 drop-shadow-md p-2 flex flex-col rounded overflow-x-hidden">
       <div className="issue-title text-lg flex items-center">
         <svg
           className="mr-2 text-green-600 w-5 h-5"
@@ -31,7 +31,7 @@ export const Card = (props: ICardProps) => {
         <span>
           <a
             href={data.url}
-            className="font-semibold focus:outline-none focus:ring-1 focus:ring-blue-600 hover:text-blue-600 hover:underline"
+            className="font-semibold focus:outline-none focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-100 hover:text-blue-600 dark:hover:text-sky-500 hover:underline"
             target="_blank noopener noreferrer"
           >
             {data.title}
@@ -52,7 +52,7 @@ export const Card = (props: ICardProps) => {
             alt={data.author.login}
           />
           <a
-            className="pl-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 font-semibold text-blue-600 hover:underline"
+            className="pl-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 dark:focus:ring-sky-500 font-semibold text-blue-600 dark:text-sky-500 hover:underline"
             href={data.author.url}
           >
             {data.author.login}
@@ -78,7 +78,7 @@ export const Card = (props: ICardProps) => {
             />
           </a>
           <a
-            className="focus:outline-none focus:ring-1 focus:ring-blue-600 text-blue-600 hover:underline"
+            className="focus:outline-none focus:ring-1 focus:ring-blue-600 dark:focus:ring-sky-500 text-blue-600 dark:text-sky-500 hover:underline"
             href={data.repository.url}
           >
             {data.repository.owner.login}/{data.repository.name}

@@ -29,7 +29,7 @@ export const Select = (props: ISelectProps) => {
   return (
     <div className="my-2 w-full">
       <label className={'block' + labelClasses}>
-        <span className="text-gray-700">{label}</span>
+        <span className="text-gray-700 dark:text-gray-100">{label}</span>
         <select
           value={value}
           onChange={(e) => setValue(e.target.value)}

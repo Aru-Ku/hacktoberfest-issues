@@ -26,7 +26,7 @@ export const FilterForm = (props: IFilterProps) => {
   };
 
   return (
-    <div className="p-6 rounded-lg shadow-lg border-2 bg-white">
+    <div className="p-6 rounded-lg shadow-lg border-2 bg-white dark:bg-gray-900">
       <form action="">
         <div className="flex flex-col flex-wrap justify-start items-start">
           <Select
