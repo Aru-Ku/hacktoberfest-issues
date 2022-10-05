@@ -36,7 +36,7 @@ export const Select = (props: ISelectProps) => {
           className={SELECT_DEFAULT_CLASSES + selectClasses}
           placeholder={placeholder}
         >
-          <option value={undefined} className="text-grey-400">
+          <option value="__NONE" className="text-grey-400">
             Filter by Language
           </option>
           {options.map((option) => {

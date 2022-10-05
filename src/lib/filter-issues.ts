@@ -4,7 +4,7 @@ import type { Issue } from "../types";
 export const FILTER_ISSUES = (filters: FilterItems) => {
   return (issue: Issue) => {
     const { goodFirstIssue, language } = filters;
-    if (!goodFirstIssue && !language) {
+    if (!goodFirstIssue && (!language || language === '__NONE')) {
       return true;
     }
 
