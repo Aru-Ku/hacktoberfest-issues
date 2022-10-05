@@ -11,10 +11,10 @@ export const Card = (props: ICardProps) => {
   const { data } = props;
 
   return (
-    <div className="issue-card snap-start bg-white dark:bg-gray-900 rounded-b border border-gray-400 dark:border-gray-50 hover:border-blue-600 dark:hover:border-sky-600 hover:outline-8 hover:drop-shadow-lg outline-blue-600 dark:outline-sky-600 drop-shadow-md p-2 flex flex-col rounded overflow-x-hidden">
+    <div className="issue-card snap-start bg-white dark:bg-gray-900 rounded-b border border-gray-400 dark:border-gray-50 hover:border-blue-600 dark:hover:border-sky-700 hover:outline-8 hover:drop-shadow-lg outline-blue-600 dark:outline-sky-600 drop-shadow-md p-2 flex flex-col rounded overflow-x-hidden">
       <div className="issue-title text-lg flex items-center">
         <svg
-          className="mr-2 text-green-600 w-5 h-5"
+          className="mr-2 text-green-600 dark:text-green-400 w-5 h-5"
           viewBox="0 0 16 16"
           version="1.1"
           width="16"

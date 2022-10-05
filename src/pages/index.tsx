@@ -47,7 +47,7 @@ const Home: NextPage<{} & IContributorsProps> = (props) => {
   }, [filters, issueList, loadMore]);
 
   return (
-    <div className="dark:bg-gray-900 dark:text-white">
+    <div className="dark:bg-gray-900 dark:text-white min-h-screen">
       <main className="container mx-auto grid grid-cols-1 md:grid-cols-[0.8fr_1.2fr] gap-4">
         <aside className="px-4">
           <div className="sticky top-0">

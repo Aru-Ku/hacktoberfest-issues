@@ -1,6 +1,8 @@
 import type { Label as ILabel } from '../../types';
 
 import { hex as HEX } from 'color-convert';
+import { useContext } from 'react';
+import AppContext from '../../contexts/AppContext';
 
 const CONVERT_HEX_TO_RGB = (hex: string) => HEX.rgb(hex);
 const CONVERT_HEX_TO_HSL = (hex: string) => HEX.hsl(hex);
@@ -59,13 +61,17 @@ export function Labels(props: { list: ILabel[] | undefined; id?: keyof ILabel; c
 export const Label = (props: { name: string; color: string; id: string }) => {
   const colors = props.color ? getParsedColors(props.color) : null;
 
+  const context = useContext(AppContext);
+
+  const darkMode = context?.darkMode ?? false;
+
   return (
     <span
       id={props.id}
       style={{
         fontSize: 10,
         backgroundColor: colors?.backgroundColor ?? 'rgb(229 231 235 / var(--tw-bg-opacity))',
-        color: colors?.textColor ?? 'black',
+        color: darkMode ? '#d1d5db' : colors?.textColor,
         borderColor: colors?.borderColor ?? 'rgb(209 213 219 / var(--tw-border-opacity))',
       }}
       className="leading-none py-1 px-2 rounded-full border font-medium"

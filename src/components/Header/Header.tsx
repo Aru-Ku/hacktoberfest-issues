@@ -1,15 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import AppContext from '../../contexts/AppContext';
 import GitHubIcon from '../../icons/GitHubIcon';
 import { IconLink } from '../Link/IconLink';
 
 export const Header = () => {
-  const [dark, setDark] = useState(typeof window !== 'undefined' && localStorage.getItem('dark') === 'true');
+  const context = useContext(AppContext);
+  const [dark, setDark] = useState(context.darkMode);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const dark = localStorage.getItem('dark') === 'true';
       setDark(dark);
       document.documentElement.classList.toggle('dark', dark);
+      if (dark) {
+        context?.setDarkMode(true);
+      }
     }
   }, []);
 
@@ -29,8 +34,10 @@ export const Header = () => {
 
                 if (dark) {
                   document.documentElement.classList.remove('dark');
+                  context?.setDarkMode(false);
                 } else {
                   document.documentElement.classList.add('dark');
+                  context?.setDarkMode(true);
                 }
               }
             }}
