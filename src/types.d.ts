@@ -10,6 +10,10 @@ interface Author {
   avatarUrl: string;
   login: string;
 }
+interface Assignees {
+  totalCount: number;
+  nodes: Author[];
+}
 
 interface Label {
   name: string;
@@ -68,6 +72,7 @@ export interface Issue {
   createdAt: string;
   updatedAt: string;
   number: number;
+  assignees: Assignees;
   author: Author;
   labels: Node<Label>;
   repository: Repository;

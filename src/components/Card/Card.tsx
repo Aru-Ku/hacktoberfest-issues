@@ -59,6 +59,28 @@ export const Card = (props: ICardProps) => {
           </a>
         </div>
       </div>
+      <div className="issue-meta-data flex items-center flex-wrap">
+        <div className="issue-assignee flex items-center">
+          {data.assignees.totalCount > 0 && (
+            <>
+              <div className="issue-assigned text-sm">Assigned to&nbsp;</div>
+              <img
+                className="inline-block rounded-full ring-2 ring-white"
+                height={20}
+                width={20}
+                src={data.assignees.nodes[0].avatarUrl}
+                alt={data.assignees.nodes[0].login}
+              />
+              <a
+                className="pl-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 font-semibold text-blue-600 hover:underline"
+                href={data.assignees.nodes[0].url}
+              >
+                {data.assignees.nodes[0].login}
+              </a>
+            </>
+          )}
+        </div>
+      </div>
       <Labels list={data.labels.nodes} />
       <div className="issue-body my-2 text-sm line-clamp-3">
         <RenderMarkdown markdownText={data.body} />

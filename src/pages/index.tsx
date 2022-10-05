@@ -21,6 +21,7 @@ const Home: NextPage<{} & IContributorsProps> = (props) => {
   const { contributors } = props;
   const [filters, setFilters] = useState<FilterItems>({
     goodFirstIssue: false,
+    unassignedIssue: false,
     language: undefined,
   });
 
