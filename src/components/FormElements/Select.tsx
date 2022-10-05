@@ -12,7 +12,7 @@ export interface ISelectProps {
 }
 
 const SELECT_DEFAULT_CLASSES = `block w-full mt-1 rounded-md border-gray-300 shadow-sm
-  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 `;
+  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-800 dark:border-gray-600 dark:focus:border-blue-300 dark:focus:ring-blue-200 dark:focus:ring-opacity-50 dark:ring-blue-800 dark:text-gray-300`;
 
 export const Select = (props: ISelectProps) => {
   const {
@@ -36,7 +36,7 @@ export const Select = (props: ISelectProps) => {
           className={SELECT_DEFAULT_CLASSES + selectClasses}
           placeholder={placeholder}
         >
-          <option value="__NONE" className="text-grey-400">
+          <option value="__NONE" className="text-gray-400 dark:text-gray-100">
             Filter by Language
           </option>
           {options.map((option) => {
