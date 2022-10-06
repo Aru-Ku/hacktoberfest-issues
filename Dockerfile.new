@@ -1,0 +1,48 @@
+FROM node:slim AS deps
+
+WORKDIR /app
+
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# Rebuild the source code only when needed
+FROM node:slim AS builder
+
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+RUN next build
+
+# Production image, copy all the files and run next
+FROM node:slim AS runner
+
+WORKDIR /app
+
+# *NOTE: non-standard "NODE_ENV" value in your environment - https://nextjs.org/docs/messages/non-standard-node-env
+# ENV NODE_ENV=production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder --chown=nextjs /app .
+
+USER nextjs
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+# forward env var port to port 3000
+EXPOSE ${PORT:-3000}:3000
+
+# CMD [ "npm", "run", "dev" ]
+# CMD [ "next", "start" ]
+CMD [ "/bin/sh" ]
