@@ -53,6 +53,8 @@
 
 [Deployment | Next.js](https://nextjs.org/docs/deployment#docker-image)
 
+[next.js/examples/with-docker at canary · vercel/next.js](https://github.com/vercel/next.js/tree/canary/examples/with-docker)
+
 [Manage NEXT_PUBLIC Environment Variables at Runtime with Docker](https://dev.to/itsrennyman/manage-nextpublic-environment-variables-at-runtime-with-docker-53dl)
 
 [docker image with NEXT_PUBLIC_ env variables](https://github.com/vercel/next.js/discussions/17641)
