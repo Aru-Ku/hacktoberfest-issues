@@ -1,29 +1,49 @@
-FROM node:slim
+# SOURCE: https://dev.to/itsrennyman/manage-nextpublic-environment-variables-at-runtime-with-docker-53dl
 
-# *NOTE: non-standard "NODE_ENV" value in your environment - https://nextjs.org/docs/messages/non-standard-node-env
-# development/production environment
-# ENV NODE_ENV=production
+# Install dependencies only when needed
+FROM node:slim AS deps
 
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH=/app/node_modules/.bin:$PATH
 
-# working directory
 WORKDIR /app
 
-# copy repo to working directory
-COPY . .
+COPY package.json package-lock.json ./
 
-# install dependencies
-RUN npm ci && next build
+RUN npm ci
+
+# Rebuild the source code only when needed
+FROM node:slim AS builder
+
+WORKDIR /app
+
+COPY . .
+COPY --from=deps /app/node_modules ./node_modules
+
+RUN NEXT_PUBLIC_GITHUB_AUTH_PAT_TOKEN=APP_NEXT_PUBLIC_GITHUB_AUTH_PAT_TOKEN npm run build
+
+# Production image, copy all the files and run next
+FROM node:slim AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV production
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
-RUN chown -R nextjs:nogroup /app
+RUN chown -R nextjs:nodejs /app/.next
 
 USER nextjs
 
-# forward env var port to port 3000
-EXPOSE ${PORT:-3000}:3000
+EXPOSE 3000
 
-# CMD [ "npm", "run", "dev" ]
-CMD [ "next", "start" ]
-# CMD [ "/bin/sh" ]
+RUN npx next telemetry disable
+
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+CMD ["npm", "run", "serve"]
