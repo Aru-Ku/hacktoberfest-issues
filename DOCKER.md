@@ -48,3 +48,11 @@
     # stop container, remove container and network
     just down
     ```
+
+### Further Reading
+
+[Deployment | Next.js](https://nextjs.org/docs/deployment#docker-image)
+
+[Manage NEXT_PUBLIC Environment Variables at Runtime with Docker](https://dev.to/itsrennyman/manage-nextpublic-environment-variables-at-runtime-with-docker-53dl)
+
+[docker image with NEXT_PUBLIC_ env variables](https://github.com/vercel/next.js/discussions/17641)

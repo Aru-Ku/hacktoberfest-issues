@@ -4,14 +4,13 @@ services:
   app:
     container_name: hacktoberfest_issues-cont
     image: hacktoberfest_issues
-    tty: true                                                                    # false for `entrypoint` in Dockerfile
-    stdin_open: true                                                             # false for `entrypoint` in Dockerfile
+    tty: true                                   # false for `entrypoint` in Dockerfile
+    stdin_open: true                            # false for `entrypoint` in Dockerfile
     env_file:
       - .env
-    # environment:
-    volumes:
-      - .:/app
-      - ./logs:/root/.npm/                                                        # troubleshooting logs
+    # volumes:
+    # - .:/app                                  # local development; interferes with node_modules
+    # - ./logs:/root/.npm/                      # troubleshooting logs
     ports:
       - ${PORT:-3000}:3000
     build:
