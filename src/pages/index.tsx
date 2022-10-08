@@ -47,25 +47,27 @@ const Home: NextPage<{} & IContributorsProps> = (props) => {
   }, [filters, issueList, loadMore]);
 
   return (
-    <main className="container mx-auto grid grid-cols-[0.8fr_1.2fr] gap-4">
-      <aside>
-        <div className="sticky top-0">
-          <Header />
-          <FilterForm languages={languages} values={filters} setValues={setFilters} />
-          <Contributors contributors={contributors} />
-        </div>
-      </aside>
-      <section className="overflow-x-hidden">
-        {
-          <CardGrid loadMore={loadMore} dataLength={issueList.length} isLoading={isLoading}>
-            {filteredIssues.map((issue, index) => {
-              // Temporarily mitigate duplicate issues key error
-              return <Card key={issue.url + index} data={issue} />;
-            })}
-          </CardGrid>
-        }
-      </section>
-    </main>
+    <div className="dark:bg-gray-900 dark:text-white min-h-screen">
+      <main className="container mx-auto grid grid-cols-1 md:grid-cols-[0.8fr_1.2fr] gap-4">
+        <aside className="px-4">
+          <div className="sticky top-0">
+            <Header />
+            <FilterForm languages={languages} values={filters} setValues={setFilters} />
+            <Contributors contributors={contributors} />
+          </div>
+        </aside>
+        <section className="overflow-x-hidden">
+          {
+            <CardGrid loadMore={loadMore} dataLength={issueList.length} isLoading={isLoading}>
+              {filteredIssues.map((issue, index) => {
+                // Temporarily mitigate duplicate issues key error
+                return <Card key={issue.url + index} data={issue} />;
+              })}
+            </CardGrid>
+          }
+        </section>
+      </main>
+    </div>
   );
 };
 

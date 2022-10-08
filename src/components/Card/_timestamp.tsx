@@ -7,7 +7,7 @@ export const TimeStamp = (props: { time: string; format?: string }) => {
   const { time, format = '' } = props;
 
   return (
-    <time className="text-gray-600" dateTime={time}>
+    <time className="text-gray-600 dark:text-gray-200" dateTime={time}>
       {dayjs(time).fromNow()}
     </time>
   );

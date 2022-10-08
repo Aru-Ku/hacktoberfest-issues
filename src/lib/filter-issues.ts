@@ -1,5 +1,5 @@
-import type { FilterItems } from "../components/Forms/FilterForm";
-import type { Issue } from "../types";
+import type { FilterItems } from '../components/Forms/FilterForm';
+import type { Issue } from '../types';
 
 export const FILTER_ISSUES = (filters: FilterItems) => {
   return (issue: Issue) => {
