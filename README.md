@@ -2,6 +2,8 @@
 
 Find the latest open issues that are tagged for [Hacktoberfest](https://hacktoberfest.com/) contribution.
 
+> Note 🚨 : This repository has been excluded from hacktoberfest.
+
 <a href="https://github.com/Aru-Ku/hacktoberfest-issues">
   <img src="https://visitor-badge.glitch.me/badge?page_id=aru-ku.hacktoberfest-issues" alt="Vistors Count">
 </a>
