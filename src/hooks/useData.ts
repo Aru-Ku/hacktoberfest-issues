@@ -5,13 +5,13 @@ import type { HactoberfestIssuesQueryResponse, IOptions, Issue, PageInfo } from 
 const axiosInstance = axios.create({
   baseURL: 'https://api.github.com',
   headers: {
-    Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_AUTH_PAT_TOKEN}`
-  }
-})
+    Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_AUTH_PAT_TOKEN}`,
+  },
+});
 
 type Response = {
-  data: HactoberfestIssuesQueryResponse
-}
+  data: HactoberfestIssuesQueryResponse;
+};
 
 const filter_issues = (issue: Issue) => {
   if (!issue) return false;
@@ -38,11 +38,8 @@ export const useData = (options: IOptions) => {
   const issueCount = useRef(0);
 
   useEffect(() => {
-
     (async () => {
-      const {
-        per_page = 20, nextPageCursor, sort = 'created', order = 'desc'
-      } = options;
+      const { per_page = 20, nextPageCursor, sort = 'created', order = 'desc' } = options;
 
       const { data: response }: { data: Response } = await axiosInstance.post('/graphql', {
         query: `
@@ -57,6 +54,10 @@ export const useData = (options: IOptions) => {
                   __typename
                   ... on Issue {
                     url, title, body, state, createdAt, number, updatedAt,
+                    assignees (first: 1) {
+                      nodes { url, avatarUrl, login }
+                      totalCount
+                    }
                     author { url, avatarUrl, login },
                     labels(first: 10) { nodes { name, color, id } },
                     repository {
@@ -68,22 +69,21 @@ export const useData = (options: IOptions) => {
                   }
                 }
               }
-            }`
+            }`,
       });
 
       const filteredIssues = response.data.search.nodes.filter(filter_issues);
       const languagesFromRepository = filteredIssues.reduce(gather_languages, []);
 
-      setIssueList((prev) => ([...prev, ...filteredIssues]));
+      setIssueList((prev) => [...prev, ...filteredIssues]);
       pageInfo.current = { ...response.data.search.pageInfo };
       isLoading.current = false;
       issueCount.current = response.data.search.issueCount;
-      languages.current = Array.from(new Set([...languages.current, ...languagesFromRepository]))
-        .sort((prev, next) => prev.localeCompare(next));
-
+      languages.current = Array.from(new Set([...languages.current, ...languagesFromRepository])).sort((prev, next) =>
+        prev.localeCompare(next)
+      );
     })();
-
-  }, [options])
+  }, [options]);
 
   return {
     isLoading: isLoading.current,
@@ -91,6 +91,5 @@ export const useData = (options: IOptions) => {
     issueList: issueList,
     issueCoung: issueCount.current,
     pageInfo: pageInfo.current,
-  }
-
-}
+  };
+};

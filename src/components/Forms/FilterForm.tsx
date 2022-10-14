@@ -4,6 +4,7 @@ import { Select } from '../FormElements/Select';
 
 export interface FilterItems {
   goodFirstIssue: boolean;
+  unassignedIssue: boolean;
   language: string | undefined;
 }
 
@@ -40,6 +41,11 @@ export const FilterForm = (props: IFilterProps) => {
             label="Good First Issue"
             value={values.goodFirstIssue}
             setValue={(value) => setValue('goodFirstIssue', value)}
+          />
+          <Checkbox
+            label="Unassigned"
+            value={values.unassignedIssue}
+            setValue={(value) => setValue('unassignedIssue', value)}
           />
         </div>
       </form>
